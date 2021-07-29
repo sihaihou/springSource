@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+       	http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+     
+    <bean id="logAop" class="com.reyco.test.aop.LogAop"/>   
+    <!-- <bean id="testAop" class="com.reyco.test.aop.TestAop"/>    -->
+    <aop:config>
+	    <!-- 配置切点表达式 -->
+	    <aop:pointcut id="logPointcut" expression="execution(* com.reyco.test.service.impl.*.*())"/>
+	    <!-- <aop:pointcut id="testPointcut" expression="execution(* com.reyco.test.service.impl.*.*())"/> -->
+	    
+	    <!-- 配置切面通知 -->
+	    <aop:aspect ref="logAop" order="1">
+	        <aop:before method="around" pointcut-ref="logPointcut"/>
+	        <aop:before method="before" pointcut-ref="logPointcut"/>
+	        <aop:after  method="after" pointcut-ref="logPointcut"/>
+	        <aop:after-returning method="afterReturning" pointcut-ref="logPointcut"/>
+	        <aop:after-throwing method="afterThrowing" pointcut-ref="logPointcut"/>
+	    </aop:aspect>
+	    
+	     <!-- 配置切面通知 -->
+	   <!--  <aop:aspect ref="testAop" order="1">
+	        <aop:before method="around" pointcut-ref="testPointcut"/>
+	        <aop:before method="before" pointcut-ref="testPointcut"/>
+	        <aop:before method="after" pointcut-ref="testPointcut"/>
+	        <aop:after-returning method="afterReturning" pointcut-ref="testPointcut"/>
+	        <aop:after-throwing method="afterThrowing" pointcut-ref="testPointcut"/>
+	    </aop:aspect> -->
+	</aop:config>
+    
+</beans>
